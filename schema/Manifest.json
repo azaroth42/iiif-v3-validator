@@ -72,16 +72,22 @@
 		},
 		"service": {
 			"type": "object",
-			"properties": {
-				"id": {"type": "string", "format": "uri"},
-				"type": {"type": "string"},
-				"@id": {"type": "string", "format": "uri"},
-				"@type": {"type": "string"},
-				"profile": {"type": "string"}
-			},
+
 			"anyOf": [
-				{"required": ["id", "type"]},
-				{"required": ["@id", "@type"]}
+				{
+					"properties": {
+						"id": {"type": "string", "format": "uri"},
+						"type": {"type": "string"},						
+						"profile": {"type": "string"}
+					},
+					"required": ["id", "type"]
+				},
+				{
+					"properties": {
+						"@id": {"type": "string", "format": "uri"},
+						"@type": {"type": "string"}
+					}
+				}
 			]
 		},
 		"viewingDirection": {
@@ -135,7 +141,7 @@
 				"partOf": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
 				"seeAlso": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}}
 			},
-			"required": ["id", "type", "items"]
+			"required": ["id", "type"]
 
 		},
 

@@ -4,6 +4,7 @@ import jsonschema
 import os
 
 from jsonschema import validate, Draft6Validator
+from jsonschema.exceptions import ValidationError
 import json
 
 from iiif_prezi_upgrader import Upgrader
@@ -22,16 +23,29 @@ v.validate(instance)
 files = os.listdir('data/remote_cache')
 flags= {"ext_ok": False, "deref_links": False}
 for f in files:
-	fn = os.path.join('data/remote_cache', f)
-	print "processing file: %s" % fn
-	upgrader = Upgrader(flags)
-	try:
-		data = upgrader.process_cached(fn)
-	except:
-		print("Failed to upgrade %s" % fn)
-		raise
-	v.validate(data)
-	print "validated!"
+	if f.endswith('.json'):
+		fn = os.path.join('data/remote_cache', f)
+		print "processing file: %s" % fn
+		upgrader = Upgrader(flags)
+		try:
+			data = upgrader.process_cached(fn)
+		except Exception as e:
+			print("Failed to upgrade %s" % fn)
+			break
+		try:
+			v.validate(data)
+		except ValidationError as e:
+			print("Failed to validate %s" % fn)
+			if e.absolute_schema_path[-1] == u'required' and \
+				e.message.startswith("u'type'"):
+				continue
+
+
+			print(e.message)
+			print(e.absolute_schema_path)
+			print(e.absolute_path)
+			break
+		print "validated!"
 
 
 

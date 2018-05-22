@@ -94,7 +94,8 @@
            "label": "recto",
            "width": 14451,
            "height": 14214,
- "service": { "@context": "http://iiif.io/api/annex/services/physdim/1/context.json", "profile": "http://iiif.io/api/annex/services/physdim",
+ "service": { "@context": "http://iiif.io/api/annex/services/physdim/1/context.json", 
+  "profile": "http://iiif.io/api/annex/services/physdim",
             "physicalScale": 0.00333333333333333, "physicalUnits": "in" },
             "images": [{
                 "resource": {
