@@ -1,7 +1,7 @@
 {
 	"$schema": "http://json-schema.org/schema#",
 	"$id": "http://iiif.io/api/presentation/ns/schema-manifest.json",
-	"title": "Manifest validation schema",
+	"title": "Manifest Validation Schema - All Defined Properties",
 	"type": "object",
 	"properties": {
 		"@context": {"type": "array", "items": {"type": "string", "format": "uri"}},
@@ -12,12 +12,13 @@
 		"summary": {"$ref": "#/definitions/languageMap"},
 		"requiredStatement": {"$ref": "#/definitions/metadataItem"},
 		"thumbnail": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
-		"posterCanvas": {"$ref": "#/definitions/canvas"},
-		"viewingDirection": {"$ref": "#/definitions/viewingDirection"},
-		"behavior": {"type": "array", "items": {"$ref": "#/definitions/behaviorItems"}},
+		"accompanyingCanvas": {"$ref": "#/definitions/canvas"},
+		"placeholderCanvas": {"$ref": "#/definitions/canvas"},
+		"viewingDirection": {"$ref": "#/definitions/viewingDirectionItems"},
+		"behavior": {"type": "array", "items": {"$ref": "#/definitions/manifestBehaviorItems"}},
 		"navDate": {"type": "string", "format": "date-time"},
 		"rights": {"type": "string", "format": "uri"},
-		"logo": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
+		"provider": {"type": "array", "items": {"$ref": "#/definitions/agent"}},
 		"homepage": {"$ref": "#/definitions/externalResource"},
 		"service": {"type": "array", "items": {"$ref": "#/definitions/service"}},
 		"rendering": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
@@ -72,12 +73,11 @@
 		},
 		"service": {
 			"type": "object",
-
 			"anyOf": [
 				{
 					"properties": {
 						"id": {"type": "string", "format": "uri"},
-						"type": {"type": "string"},						
+						"type": {"$ref": "#/definitions/serviceTypeItems"},						
 						"profile": {"type": "string"}
 					},
 					"required": ["id", "type"]
@@ -90,17 +90,38 @@
 				}
 			]
 		},
-		"viewingDirection": {
+		"viewingDirectionItems": {
 			"type": "string", 
 			"enum": ["right-to-left", "left-to-right", 
 					"top-to-bottom", "bottom-to-top"]
 		},
-		"behaviorItems": {
+		"manifestBehaviorItems": {
 			"type": "string",
-			"enum": ["auto-advance", "continuous", "facing-pages", 
-					"individuals", "multi-part", "no-nav", "non-paged",
-					"hidden", "paged", "repeat", "sequence",
-					"thumbnail-nav", "together", "unordered"]
+			"enum": ["auto-advance", "continuous", 
+					"individuals", "no-auto-advance", "no-repeat",
+					"paged", "repeat", "unordered"]
+		},
+		"contentTypeItems": {
+			"type": "string",
+			"enum": ["Dataset", "Image", "Model", "Sound", "Text", "Video"]
+		},
+		"serviceTypeItems": {
+			"type": "string",
+			"enum": ["ImageService1", "ImageService2", "ImageService3",
+					"SearchService1", "AutoCompleteService1", 
+					"AuthCookieService1", "AuthTokenService1", "AuthLogoutService1"]
+		},
+		"agent": {
+			"type": "object",
+			"properties": {
+				"id": {"type": "string", "format": "uri"},
+				"type": {"type": "string", "enum": ["Agent"]},
+				"label": {"$ref": "#/definitions/languageMap"},				
+				"homepage": {"$ref": "#/definitions/externalResource"},
+				"logo": {"$ref": "#/definitions/externalResource"},
+				"seeAlso": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}} 
+			},
+			"required": ["id", "type", "label"]
 		},
 		"canvasRef": {
 			"type": "object",
@@ -116,9 +137,14 @@
 				"id": {"type": "string", "format": "uri"},
 				"type": {"type": "string", "enum": ["SpecificResource"]},
 				"source": {"type": "string", "format": "uri"},
-				"selector": {"type": "object"}
-			}
+				"selector": {"type": "object"},
+				"purpose": {"type": "array", "items": {"type": "string"}},
+				"styleClass": {"type": "string"}
+			},
+			"required": ["type", "source", "selector"]
 		},
+
+
 
 		"annotationPage": {
 			"type": "object",
@@ -134,11 +160,11 @@
 				"thumbnail": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
 				"behavior": {"type": "array", "items": {"$ref": "#/definitions/behaviorItems"}},
 				"rights": {"type": "string", "format": "uri"},
-				"logo": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
 				"homepage": {"$ref": "#/definitions/externalResource"},
 				"service": {"type": "array", "items": {"$ref": "#/definitions/service"}},
 				"rendering": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
 				"partOf": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
+				"provider": {"type": "array", "items": {"$ref": "#/definitions/agent"}},
 				"seeAlso": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}}
 			},
 			"required": ["id", "type"]
@@ -149,9 +175,33 @@
 			"type": "object",
 			"properties": {
 				"id": {"type": "string", "format": "uri"},
-				"type": {"type": "string", "enum": ["Range"]}
+				"type": {"type": "string", "enum": ["Range"]},
+				"label": {"$ref": "#/definitions/languageMap"},
+
+				"metadata": {"type": "array", "items": {"$ref": "#/definitions/metadataItem"}},
+				"summary": {"$ref": "#/definitions/languageMap"},
+				"requiredStatement": {"$ref": "#/definitions/metadataItem"},
+				"thumbnail": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
+				"accompanyingCanvas": {"$ref": "#/definitions/canvas"},
+				"placeholderCanvas": {"$ref": "#/definitions/canvas"},
+				"viewingDirection": {"$ref": "#/definitions/viewingDirection"},
+				"behavior": {"type": "array", "items": {"$ref": "#/definitions/behaviorItems"}},
+				"navDate": {"type": "string", "format": "date-time"},
+				"rights": {"type": "string", "format": "uri"},
+				"provider": {"type": "array", "items": {"$ref": "#/definitions/agent"}},
+				"homepage": {"$ref": "#/definitions/externalResource"},
+				"service": {"type": "array", "items": {"$ref": "#/definitions/service"}},
+				"rendering": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
+				"partOf": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
+				"seeAlso": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
+				"start": {"anyOf": [
+						{"$ref": "#/definitions/canvasRef"}, 
+						{"$ref": "#/definitions/specificResource"}
+					]
+				},
+				"items": {"type": "array", "items": {"$ref": "#/definitions/rangeOrCanvas"}},
 			},
-			"required": ["id", "type"]
+			"required": ["id", "type", "items"]
 		},
 
 		"canvas": {
@@ -173,7 +223,7 @@
 				"behavior": {"type": "array", "items": {"$ref": "#/definitions/behaviorItems"}},
 				"navDate": {"type": "string", "format": "date-time"},
 				"rights": {"type": "string", "format": "uri"},
-				"logo": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
+				"provider": {"type": "array", "items": {"$ref": "#/definitions/agent"}},				
 				"homepage": {"$ref": "#/definitions/externalResource"},
 				"service": {"type": "array", "items": {"$ref": "#/definitions/service"}},
 				"rendering": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
@@ -202,5 +252,5 @@
 
 	},
 	"additionalProperties": true,
-	"required": ["@context", "id", "type", "items"]
+	"required": ["@context", "id", "type", "items", "label"]
 }
