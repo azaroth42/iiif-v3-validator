@@ -53,12 +53,6 @@ for f in files:
 
 
 
-
-
-
-
-
-
 if 0:
 	fh = file('tests/_top.json')
 	data = fh.read()

@@ -199,7 +199,7 @@
 						{"$ref": "#/definitions/specificResource"}
 					]
 				},
-				"items": {"type": "array", "items": {"$ref": "#/definitions/rangeOrCanvas"}},
+				"items": {"type": "array", "items": {"$ref": "#/definitions/rangeItems"}}
 			},
 			"required": ["id", "type", "items"]
 		},
@@ -240,6 +240,14 @@
 					{"required": ["height", "width"]},
 					{"required": ["duration"]}
 			] 
+		},
+
+		"rangeItems": {
+			"anyOf": [
+				{"$ref": "#/definitions/canvasRef"},
+				{"$ref": "#/definitions/range"},
+				{"$ref": "#/definitions/specificResource"}
+			]
 		},
 
 		"annotation": {
