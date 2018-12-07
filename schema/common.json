@@ -1,0 +1,140 @@
+{
+	"definitions": {
+		"contextArrayOrPrezi": {
+			"anyOf": [
+				{"type": "array", "items": {"type": "string", "format": "uri"}},
+				{"type": "string", "enum": "http://iiif.io/api/presentation/3/context.json"}
+			]
+		},
+		"languageMap": {
+			"type": "object",
+			"patternProperties": {
+				"^([a-z]{2,3}(-[a-zA-Z]+)?|none)$": { 
+					"type": "array", "items": {"type": "string"}}
+			},
+			"additionalProperties": false
+		},
+		"metadataItem": {
+			"type": "object",
+			"properties": {
+				"label": {"$ref": "#/definitions/languageMap"},
+				"value": {"$ref": "#/definitions/languageMap"}
+			},
+			"additionalProperties": false,
+			"required": ["label", "value"]
+		},
+		"externalResource": {
+			"type": "object",
+			"properties": {
+				"id": {"type": "string", "format": "uri"},
+				"type": {"type": "string"},
+				"label": {"$ref": "#/definitions/languageMap"},				
+				"format": {"type": "string"},
+				"service": {"type": "array", "items": {"$ref": "#/definitions/service"}},
+				"language": {"type": "array", "items": {"type": "string"}},
+				"height": {"type": "integer", "minimum": 1},
+				"width": {"type": "integer", "minimum": 1},
+				"duration": {"type": "number", "minimum": 1}
+			},
+			"additionalProperties": false,
+			"required": ["id", "type"],
+			"dependencies": {
+				"width": ["height"],
+				"height": ["width"]
+			}
+		},
+		"service": {
+			"type": "object",
+			"anyOf": [
+				{
+					"properties": {
+						"id": {"type": "string", "format": "uri"},
+						"type": {"$ref": "#/definitions/serviceTypeItems"},						
+						"profile": {"type": "string"}
+					},
+					"required": ["id", "type"]
+				},
+				{
+					"properties": {
+						"@id": {"type": "string", "format": "uri"},
+						"@type": {"type": "string"}
+					}
+				}
+			]
+		},
+		"viewingDirectionItems": {
+			"type": "string", 
+			"enum": ["right-to-left", "left-to-right", 
+					"top-to-bottom", "bottom-to-top"]
+		},
+		"collectionBehaviorItems": {
+			"type": "string",
+			"enum": ["auto-advance", "continuous", "individuals", 
+				     "multi-part", "no-auto-advance", "no-repeat",
+					"paged", "repeat", "together", "unordered"]
+		},
+		"manifestBehaviorItems": {
+			"type": "string",
+			"enum": ["auto-advance", "continuous", 
+					"individuals", "no-auto-advance", "no-repeat",
+					"paged", "repeat", "unordered"]
+		},
+		"canvasBehaviorItems": {
+			"type": "string",
+			"enum": ["auto-advance", "facing-pages", "no-auto-advance","non-paged"]
+		},
+		"rangeBehaviorItems": {
+			"type": "string",
+			"enum": ["auto-advance", "continuous", "individuals", 
+				     "no-auto-advance", "no-nav", "paged",
+					 "sequence", "thumbnail-nav", "unordered"]
+		},
+		"contentTypeItems": {
+			"type": "string",
+			"enum": ["Dataset", "Image", "Model", "Sound", "Text", "Video"]
+		},
+		"serviceTypeItems": {
+			"type": "string",
+			"enum": ["ImageService1", "ImageService2", "ImageService3",
+					"SearchService1", "AutoCompleteService1", 
+					"AuthCookieService1", "AuthTokenService1", "AuthLogoutService1"]
+		},
+		"agent": {
+			"type": "object",
+			"properties": {
+				"id": {"type": "string", "format": "uri"},
+				"type": {"type": "string", "enum": ["Agent"]},
+				"label": {"$ref": "#/definitions/languageMap"},				
+				"homepage": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
+				"logo": {"$ref": "#/definitions/externalResource"},
+				"seeAlso": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}} 
+			},
+			"additionalProperties": false,
+			"required": ["id", "type", "label"]
+		},
+		"canvasRef": {
+			"type": "object",
+			"properties": {
+				"id": {"type": "string", "format": "uri"},
+				"type": {"type": "string", "enum": ["Canvas"]}	
+			},
+			"required": ["id", "type"]
+		},
+		"rangeRef": {
+			"type": "object",
+
+		},
+		"specificResource": {
+			"type": "object",
+			"properties": {
+				"id": {"type": "string", "format": "uri"},
+				"type": {"type": "string", "enum": ["SpecificResource"]},
+				"source": {"type": "string", "format": "uri"},
+				"selector": {"type": "object"},
+				"purpose": {"type": "array", "items": {"type": "string"}},
+				"styleClass": {"type": "string"}
+			},
+			"required": ["type", "source", "selector"]
+		}
+	}
+}

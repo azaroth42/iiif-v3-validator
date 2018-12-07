@@ -1,42 +1,44 @@
 {
 	"$schema": "http://json-schema.org/schema#",
 	"$id": "http://iiif.io/api/presentation/ns/schema-manifest.json",
-	"title": "Manifest Validation Schema - Strict",
+	"title": "Canvas Validation Schema - Strict",
 	"type": "object",
 	"properties": {
 		"@context": {"$ref": "#/definitions/contextArrayOrPrezi"},
 		"id": {"type": "string", "format": "uri"},
-		"type": {"type": "string", "enum": ["Manifest"]},
+		"type": {"type": "string", "enum": ["Canvas"]},
 		"label": {"$ref": "#/definitions/languageMap"},
+		"height": {"type": "integer", "minimum": 1},
+		"width": {"type": "integer", "minimum": 1},
+		"duration": {"type": "number", "minimum": 1},
+		"items": {"type": "array", "items": {"$ref": "#/definitions/annotationPage"}},
+
 		"metadata": {"type": "array", "items": {"$ref": "#/definitions/metadataItem"}},
 		"summary": {"$ref": "#/definitions/languageMap"},
 		"requiredStatement": {"$ref": "#/definitions/metadataItem"},
 		"thumbnail": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
 		"accompanyingCanvas": {"$ref": "#/definitions/canvas"},
 		"placeholderCanvas": {"$ref": "#/definitions/canvas"},
-		"viewingDirection": {"$ref": "#/definitions/viewingDirectionItems"},
-		"behavior": {"type": "array", "items": {"$ref": "#/definitions/manifestBehaviorItems"}},
+		"behavior": {"type": "array", "items": {"$ref": "#/definitions/canvasBehaviorItems"}},
 		"navDate": {"type": "string", "format": "date-time"},
 		"rights": {"type": "string", "format": "uri"},
-		"provider": {"type": "array", "items": {"$ref": "#/definitions/agent"}},
+		"provider": {"type": "array", "items": {"$ref": "#/definitions/agent"}},				
 		"homepage": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
 		"service": {"type": "array", "items": {"$ref": "#/definitions/service"}},
 		"rendering": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
 		"partOf": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
 		"seeAlso": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
-		"start": {"anyOf": [
-				{"$ref": "#/definitions/canvasRef"}, 
-				{"$ref": "#/definitions/specificResource"}
-			]
-		},
-		"items": {"type": "array", "items": {"$ref": "#/definitions/canvas"}},
-		"structures": {"type": "array", "items": {"$ref": "#/definitions/range"}},
 		"annotations": {"type": "array", "items": {"$ref": "#/definitions/annotationPage"}}
 	},
-
-	"definitions": {
-		"$comment": "This will be replaced by the build script"
-	},
 	"additionalProperties": false,
-	"required": ["@context", "id", "type", "items", "label"]
+	"required": ["id", "type"],
+	"dependencies": {
+		"width": ["height"],
+		"height": ["width"]
+	},
+	"anyOf": [
+			{"required": ["height", "width"]},
+			{"required": ["duration"]}
+	],
+	"definitions": {} 
 }

@@ -1,21 +1,22 @@
 {
 	"$schema": "http://json-schema.org/schema#",
 	"$id": "http://iiif.io/api/presentation/ns/schema-manifest.json",
-	"title": "Manifest Validation Schema - Strict",
+	"title": "Range Validation Schema - Strict",
 	"type": "object",
 	"properties": {
 		"@context": {"$ref": "#/definitions/contextArrayOrPrezi"},
 		"id": {"type": "string", "format": "uri"},
-		"type": {"type": "string", "enum": ["Manifest"]},
+		"type": {"type": "string", "enum": ["Range"]},
 		"label": {"$ref": "#/definitions/languageMap"},
+
 		"metadata": {"type": "array", "items": {"$ref": "#/definitions/metadataItem"}},
 		"summary": {"$ref": "#/definitions/languageMap"},
 		"requiredStatement": {"$ref": "#/definitions/metadataItem"},
 		"thumbnail": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
 		"accompanyingCanvas": {"$ref": "#/definitions/canvas"},
 		"placeholderCanvas": {"$ref": "#/definitions/canvas"},
-		"viewingDirection": {"$ref": "#/definitions/viewingDirectionItems"},
-		"behavior": {"type": "array", "items": {"$ref": "#/definitions/manifestBehaviorItems"}},
+		"viewingDirection": {"$ref": "#/definitions/viewingDirection"},
+		"behavior": {"type": "array", "items": {"$ref": "#/definitions/rangeBehaviorItems"}},
 		"navDate": {"type": "string", "format": "date-time"},
 		"rights": {"type": "string", "format": "uri"},
 		"provider": {"type": "array", "items": {"$ref": "#/definitions/agent"}},
@@ -29,14 +30,18 @@
 				{"$ref": "#/definitions/specificResource"}
 			]
 		},
-		"items": {"type": "array", "items": {"$ref": "#/definitions/canvas"}},
-		"structures": {"type": "array", "items": {"$ref": "#/definitions/range"}},
-		"annotations": {"type": "array", "items": {"$ref": "#/definitions/annotationPage"}}
+		"items": {
+			"type": "array", 
+			"items": {
+				"anyOf": [
+					{"$ref": "#/definitions/canvasRef"},
+					{"$ref": "#/definitions/rangeRef"},
+					{"$ref": "#/definitions/range"}
+				]
+			}
+		}
 	},
-
-	"definitions": {
-		"$comment": "This will be replaced by the build script"
-	},
+	"required": ["id", "type", "items"],
 	"additionalProperties": false,
-	"required": ["@context", "id", "type", "items", "label"]
+	"definitions": {}
 }
