@@ -15,46 +15,54 @@ def main_to_def(orig):
 
 
 ### Load up the base files and make definitions versions of them
-fh = open('schema/common.json')
+fh = open('source_schema/common.json')
 common_js = json.load(fh)
 fh.close()
 
-fh = open('schema/Collection.json')
+fh = open('source_schema/Collection.json')
 collection_js = json.load(fh)
 fh.close()
 collection_def_js = main_to_def(collection_js)
 
-fh = open('schema/Manifest.json')
+fh = open('source_schema/Manifest.json')
 manifest_js = json.load(fh)
 fh.close()
 
-fh = open('schema/Canvas.json')
+fh = open('source_schema/Canvas.json')
 canvas_js = json.load(fh)
 fh.close()
 canvas_def_js = main_to_def(canvas_js)
 
-fh = open('schema/Range.json')
+fh = open('source_schema/Range.json')
 range_js = json.load(fh)
 fh.close()
 range_def_js = main_to_def(range_js)
+
+fh = open('source_schema/AnnotationPage.json')
+annopage_js = json.load(fh)
+fh.close()
+annopage_def_js = main_to_def(annopage_js)
 
 
 ### Construct Collection
 collection_js['definitions'] = common_js['definitions']
 collection_js['definitions']['collection'] = collection_def_js
-
+collection_js['definitions']['annotationPage'] = annopage_def_js
+ 
 ### Construct Manifest
 manifest_js['definitions'] = common_js['definitions']
 manifest_js['definitions']['canvas'] = canvas_def_js
 manifest_js['definitions']['range'] = range_def_js
+manifest_js['definitions']['annotationPage'] = annopage_def_js
 
 ### Construct Canvas
 canvas_js['definitions'] = common_js['definitions']
+canvas_js['definitions']['annotationPage'] = annopage_def_js
 
 ### Construct Range
 range_js['definitions'] = common_js['definitions']
 range_js['definitions']['range'] = range_def_js
-
+range_js['definitions']['annotationPage'] = annopage_def_js
 
 ### Write out schemas
 # These versions are now not human readable
