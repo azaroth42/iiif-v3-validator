@@ -1,6 +1,6 @@
 {
 	"$schema": "http://json-schema.org/schema#",
-	"$id": "http://iiif.io/api/presentation/ns/schema-manifest.json",
+	"$id": "http://iiif.io/api/presentation/ns/schema-canvas.json",
 	"title": "Canvas Validation Schema - Strict",
 	"type": "object",
 	"properties": {
@@ -12,7 +12,6 @@
 		"width": {"type": "integer", "minimum": 1},
 		"duration": {"type": "number", "minimum": 1},
 		"items": {"type": "array", "items": {"$ref": "#/definitions/annotationPage"}},
-
 		"metadata": {"type": "array", "items": {"$ref": "#/definitions/metadataItem"}},
 		"summary": {"$ref": "#/definitions/languageMap"},
 		"requiredStatement": {"$ref": "#/definitions/metadataItem"},

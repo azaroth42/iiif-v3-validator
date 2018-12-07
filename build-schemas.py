@@ -48,10 +48,8 @@ manifest_js['definitions'] = common_js['definitions']
 manifest_js['definitions']['canvas'] = canvas_def_js
 manifest_js['definitions']['range'] = range_def_js
 
-
 ### Construct Canvas
 canvas_js['definitions'] = common_js['definitions']
-
 
 ### Construct Range
 range_js['definitions'] = common_js['definitions']
@@ -61,8 +59,19 @@ range_js['definitions']['range'] = range_def_js
 ### Write out schemas
 # These versions are now not human readable
 # as they have lost all whitespace and order
+
+fh = open('schema/Collection_system.json', 'w')
+json.dump(collection_js, fh)
+fh.close()
+
 fh = open('schema/Manifest_system.json', 'w')
 json.dump(manifest_js, fh)
 fh.close()
 
+fh = open('schema/Canvas_system.json', 'w')
+json.dump(canvas_js, fh)
+fh.close()
 
+fh = open('schema/Range_system.json', 'w')
+json.dump(range_js, fh)
+fh.close()

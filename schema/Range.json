@@ -1,6 +1,6 @@
 {
 	"$schema": "http://json-schema.org/schema#",
-	"$id": "http://iiif.io/api/presentation/ns/schema-manifest.json",
+	"$id": "http://iiif.io/api/presentation/ns/schema-range.json",
 	"title": "Range Validation Schema - Strict",
 	"type": "object",
 	"properties": {
@@ -8,7 +8,6 @@
 		"id": {"type": "string", "format": "uri"},
 		"type": {"type": "string", "enum": ["Range"]},
 		"label": {"$ref": "#/definitions/languageMap"},
-
 		"metadata": {"type": "array", "items": {"$ref": "#/definitions/metadataItem"}},
 		"summary": {"$ref": "#/definitions/languageMap"},
 		"requiredStatement": {"$ref": "#/definitions/metadataItem"},

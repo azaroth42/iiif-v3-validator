@@ -1,12 +1,12 @@
 {
 	"$schema": "http://json-schema.org/schema#",
-	"$id": "http://iiif.io/api/presentation/ns/schema-manifest.json",
-	"title": "Manifest Validation Schema - Strict",
+	"$id": "http://iiif.io/api/presentation/ns/schema-collection.json",
+	"title": "Collection Validation Schema - Strict",
 	"type": "object",
 	"properties": {
 		"@context": {"$ref": "#/definitions/contextArrayOrPrezi"},
 		"id": {"type": "string", "format": "uri"},
-		"type": {"type": "string", "enum": ["Manifest"]},
+		"type": {"type": "string", "enum": ["Collection"]},
 		"label": {"$ref": "#/definitions/languageMap"},
 		"metadata": {"type": "array", "items": {"$ref": "#/definitions/metadataItem"}},
 		"summary": {"$ref": "#/definitions/languageMap"},
@@ -24,14 +24,16 @@
 		"rendering": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
 		"partOf": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
 		"seeAlso": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
-		"start": {
-			"anyOf": [
-				{"$ref": "#/definitions/canvasRef"}, 
-				{"$ref": "#/definitions/specificResource"}
-			]
+		"items": {
+			"type": "array", 
+			"items": {
+				"anyOf": [
+					{"$ref": "#/definitions/manifestRef"},
+					{"$ref": "#/definitions/collectionRef"},
+					{"$ref": "#/definitions/collection"}
+				]
+			}
 		},
-		"items": {"type": "array", "items": {"$ref": "#/definitions/canvas"}},
-		"structures": {"type": "array", "items": {"$ref": "#/definitions/range"}},
 		"annotations": {"type": "array", "items": {"$ref": "#/definitions/annotationPage"}}
 	},
 

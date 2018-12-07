@@ -112,6 +112,22 @@
 			"additionalProperties": false,
 			"required": ["id", "type", "label"]
 		},
+		"collectionRef": {
+			"type": "object",
+			"properties": {
+				"id": {"type": "string", "format": "uri"},
+				"type": {"type": "string", "enum": ["Collection"]}	
+			},
+			"required": ["id", "type"]
+		},
+		"manifestRef": {
+			"type": "object",
+			"properties": {
+				"id": {"type": "string", "format": "uri"},
+				"type": {"type": "string", "enum": ["Manifest"]}	
+			},
+			"required": ["id", "type"]
+		},
 		"canvasRef": {
 			"type": "object",
 			"properties": {
@@ -122,7 +138,11 @@
 		},
 		"rangeRef": {
 			"type": "object",
-
+			"properties": {
+				"id": {"type": "string", "format": "uri"},
+				"type": {"type": "string", "enum": ["Canvas"]}	
+			},
+			"required": ["id", "type"]
 		},
 		"specificResource": {
 			"type": "object",
