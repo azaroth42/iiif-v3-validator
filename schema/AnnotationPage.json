@@ -1,0 +1,32 @@
+{
+	"$schema": "http://json-schema.org/schema#",
+	"$id": "http://iiif.io/api/presentation/ns/schema-annotationPage.json",
+	"title": "AnnotationPage Validation Schema - Strict",
+	"type": "object",
+	"properties": {
+		"@context": {"$ref": "#/definitions/contextArrayOrAnnotation"},
+		"id": {"type": "string", "format": "uri"},
+		"type": {"type": "string", "enum": ["AnnotationPage"]},
+		"partOf": {"$ref": "#/definitions/annotationCollectionRef"},
+		"next": {"$ref": "#/definitions/annotationPageRef"},
+		"prev": {"$ref": "#/definitions/annotationPageRef"},
+		"startIndex": {"type": "integer", "minimum": 0},
+		"items": {"type": "array", "items": {"$ref": "#/definitions/annotation"}},
+
+		"metadata": {"type": "array", "items": {"$ref": "#/definitions/metadataItem"}},
+		"summary": {"$ref": "#/definitions/languageMap"},
+		"requiredStatement": {"$ref": "#/definitions/metadataItem"},
+		"thumbnail": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
+		"behavior": {"type": "array", "items": {"$ref": "#/definitions/contentBehaviorItems"}},
+		"rights": {"type": "string", "format": "uri"},
+		"homepage": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
+		"service": {"type": "array", "items": {"$ref": "#/definitions/service"}},
+		"rendering": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
+		"provider": {"type": "array", "items": {"$ref": "#/definitions/agent"}},
+		"seeAlso": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}}
+	},
+
+	"definitions": {},
+	"additionalProperties": false,
+	"required": ["@context", "id", "type", "items"]
+}

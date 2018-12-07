@@ -34,7 +34,15 @@
 				]
 			}
 		},
-		"annotations": {"type": "array", "items": {"$ref": "#/definitions/annotationPage"}}
+		"annotations": {
+			"type": "array", 
+			"items": {
+				"anyOf": [
+					{"$ref": "#/definitions/annotationPage"},
+					{"$ref": "#/definitions/annotationPageRef"}
+				]
+			}
+		}
 	},
 
 	"definitions": {

@@ -11,7 +11,6 @@
 		"height": {"type": "integer", "minimum": 1},
 		"width": {"type": "integer", "minimum": 1},
 		"duration": {"type": "number", "minimum": 1},
-		"items": {"type": "array", "items": {"$ref": "#/definitions/annotationPage"}},
 		"metadata": {"type": "array", "items": {"$ref": "#/definitions/metadataItem"}},
 		"summary": {"$ref": "#/definitions/languageMap"},
 		"requiredStatement": {"$ref": "#/definitions/metadataItem"},
@@ -27,7 +26,24 @@
 		"rendering": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
 		"partOf": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
 		"seeAlso": {"type": "array", "items": {"$ref": "#/definitions/externalResource"}},
-		"annotations": {"type": "array", "items": {"$ref": "#/definitions/annotationPage"}}
+		"items": {
+			"type": "array", 
+			"items": {
+				"anyOf": [
+					{"$ref": "#/definitions/annotationPage"},
+					{"$ref": "#/definitions/annotationPageRef"}
+				]
+			}
+		},
+		"annotations": {
+			"type": "array", 
+			"items": {
+				"anyOf": [
+					{"$ref": "#/definitions/annotationPage"},
+					{"$ref": "#/definitions/annotationPageRef"}
+				]
+			}
+		}
 	},
 	"additionalProperties": false,
 	"required": ["id", "type"],

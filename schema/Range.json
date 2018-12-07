@@ -38,6 +38,15 @@
 					{"$ref": "#/definitions/range"}
 				]
 			}
+		},
+		"annotations": {
+			"type": "array", 
+			"items": {
+				"anyOf": [
+					{"$ref": "#/definitions/annotationPage"},
+					{"$ref": "#/definitions/annotationPageRef"}
+				]
+			}
 		}
 	},
 	"required": ["id", "type", "items"],

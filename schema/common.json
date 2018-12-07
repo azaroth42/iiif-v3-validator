@@ -6,6 +6,12 @@
 				{"type": "string", "enum": "http://iiif.io/api/presentation/3/context.json"}
 			]
 		},
+		"contextArrayOrAnnotation": {
+			"anyOf": [
+				{"type": "array", "items": {"type": "string", "format": "uri"}},
+				{"type": "string", "enum": "http://www.w3.org/ns/anno.jsonld"}
+			]
+		},
 		"languageMap": {
 			"type": "object",
 			"patternProperties": {
@@ -89,6 +95,10 @@
 				     "no-auto-advance", "no-nav", "paged",
 					 "sequence", "thumbnail-nav", "unordered"]
 		},
+		"contentBehaviorItems": {
+			"type": "string",
+			"enum": ["hidden"]
+		},
 		"contentTypeItems": {
 			"type": "string",
 			"enum": ["Dataset", "Image", "Model", "Sound", "Text", "Video"]
@@ -144,6 +154,25 @@
 			},
 			"required": ["id", "type"]
 		},
+		"annotationPageRef": {
+			"type": "object",
+			"properties": {
+				"id": {"type": "string", "format": "uri"},
+				"type": {"type": "string", "enum": ["AnnotationPage"]}	
+			},
+			"required": ["id", "type"]
+		},
+		"annotationCollectionRef": {
+			"type": "object",
+			"properties": {
+				"id": {"type": "string", "format": "uri"},
+				"type": {"type": "string", "enum": ["AnnotationCollection"]},
+				"total": {"type": "integer", "minimum": 1},
+				"modified": {"type": "string", "format": "date-time"}	
+			},
+			"required": ["id", "type"]
+		},
+
 		"specificResource": {
 			"type": "object",
 			"properties": {
