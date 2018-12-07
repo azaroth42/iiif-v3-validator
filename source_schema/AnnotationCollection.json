@@ -1,17 +1,16 @@
 {
 	"$schema": "http://json-schema.org/schema#",
-	"$id": "http://iiif.io/api/presentation/ns/schema-annotationPage.json",
-	"title": "AnnotationPage Validation Schema - Strict",
+	"$id": "http://iiif.io/api/presentation/ns/schema-annotationCollection.json",
+	"title": "AnnotationCollection Validation Schema - Strict",
 	"type": "object",
 	"properties": {
 		"@context": {"$ref": "#/definitions/contextArrayOrPrezi"},
 		"id": {"type": "string", "format": "uri"},
-		"type": {"type": "string", "enum": ["AnnotationPage"]},
-		"partOf": {"$ref": "#/definitions/annotationCollectionRef"},
-		"next": {"$ref": "#/definitions/annotationPageRef"},
-		"prev": {"$ref": "#/definitions/annotationPageRef"},
-		"startIndex": {"type": "integer", "minimum": 0},
-		"items": {"type": "array", "items": {"$ref": "#/definitions/annotation"}},
+		"type": {"type": "string", "enum": ["AnnotationCollection"]},
+		"first": {"$ref": "#/definitions/annotationPageRef"},
+		"last": {"$ref": "#/definitions/annotationPageRef"},
+		"total": {"type": "integer", "minimum": 1},
+		"modified": {"type": "string", "format": "date-time"},
 
 		"metadata": {"type": "array", "items": {"$ref": "#/definitions/metadataItem"}},
 		"summary": {"$ref": "#/definitions/languageMap"},
@@ -28,5 +27,5 @@
 
 	"definitions": {},
 	"additionalProperties": false,
-	"required": ["@context", "id", "type", "items"]
+	"required": ["@context", "id", "type", "first"]
 }

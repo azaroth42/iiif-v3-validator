@@ -6,12 +6,6 @@
 				{"type": "string", "enum": "http://iiif.io/api/presentation/3/context.json"}
 			]
 		},
-		"contextArrayOrAnnotation": {
-			"anyOf": [
-				{"type": "array", "items": {"type": "string", "format": "uri"}},
-				{"type": "string", "enum": "http://www.w3.org/ns/anno.jsonld"}
-			]
-		},
 		"languageMap": {
 			"type": "object",
 			"patternProperties": {

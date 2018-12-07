@@ -11,8 +11,8 @@ def main_to_def(orig):
 	del def_js['$schema']
 	del def_js['definitions']
 	del def_js['properties']['@context']
+	def_js['required'].remove('@context')
 	return def_js
-
 
 ### Load up the base files and make definitions versions of them
 fh = open('source_schema/common.json')
@@ -43,6 +43,14 @@ annopage_js = json.load(fh)
 fh.close()
 annopage_def_js = main_to_def(annopage_js)
 
+fh = open('source_schema/AnnotationCollection.json')
+annocoll_js = json.load(fh)
+fh.close()
+
+fh = open('source_schema/Annotation.json')
+anno_js = json.load(fh)
+fh.close()
+anno_def_js = main_to_def(anno_js)
 
 ### Construct Collection
 collection_js['definitions'] = common_js['definitions']
@@ -64,7 +72,19 @@ range_js['definitions'] = common_js['definitions']
 range_js['definitions']['range'] = range_def_js
 range_js['definitions']['annotationPage'] = annopage_def_js
 
-### Write out schemas
+### Construct Annotation Page
+
+annopage_js['definitions'] = common_js['definitions']
+annopage_js['definitions']['annotation'] = anno_def_js
+
+### Construct Annotation
+
+
+### Construct Annotation Collection
+annocoll_js['definitions'] = common_js['definitions']
+
+
+### Write out schemas to use in practice
 # These versions are now not human readable
 # as they have lost all whitespace and order
 
@@ -82,4 +102,12 @@ fh.close()
 
 fh = open('schema/Range_system.json', 'w')
 json.dump(range_js, fh)
+fh.close()
+
+fh = open('schema/AnnotationPage_system.json', 'w')
+json.dump(annopage_js, fh)
+fh.close()
+
+fh = open('schema/Annotation_system.json', 'w')
+json.dump(anno_js, fh)
 fh.close()
