@@ -8,19 +8,29 @@
 		"id": {"type": "string", "format": "uri"},
 		"type": {"type": "string", "enum": ["Annotation"]},
 
-		"body": {},
-		"target": {},
-		"motivation": {},
-		"creator": {},
-		"created": {},
-		"generator": {},
-		"generated": {},
-		"modified": {},
-		"audience": {},
-		"accessibility": {},
-		"canonical": {},
-		"via": {},
+		"body": {
+			"$comment": "string (uri), TextualBody, Choice, SpecificResource or array thereof"
 
+
+		},
+		"target": {},
+
+		"creator": {"$ref": "#/definitions/agent"},
+		"generator": {"$ref": "#/definitions/agent"},
+		"motivation": {"$ref": "#/definitions/stringOrArrayOfStrings"},
+		"created": {"type": "string", "format": "date-time"},
+		"generated": {"type": "string", "format": "date-time"},
+		"modified": {"type": "string", "format": "date-time"},
+		"audience": {"$ref": "#/definitions/objectOrArrayOfObjects"},
+		"accessibility": {"$ref": "#/definitions/stringOrArrayOfStrings"},
+		"canonical": {"type": "string", "format": "uri"},
+		"via": {"$ref": "#/definitions/stringOrArrayOfStrings"},
+		"stylesheet": {
+			"anyOf": [
+				{"type": "string"},
+				{"type": "object"}
+			]
+		},
 		"metadata": {"type": "array", "items": {"$ref": "#/definitions/metadataItem"}},
 		"summary": {"$ref": "#/definitions/languageMap"},
 		"requiredStatement": {"$ref": "#/definitions/metadataItem"},
@@ -37,6 +47,61 @@
 	"additionalProperties": false,
 	"required": ["@context", "id", "type", "target", "motivation"],
 
-	"definitions": {},
+	"definitions": {
+		"stringOrArrayOfStrings": {
+			"anyOf": [
+				{"type": "array", "items": {"type": "string"}},
+				{"type": "string"}
+			]
+		},
+		"objectOrArrayOfObjects": {
+			"anyOf": [
+				{"type": "array", "items": {"$ref": "#/definitions/resource"}},
+				{"$ref": "#/definitions/resource"}
+			]
+		},
+		"agent": {
+			"type": "object",
+			"properties": {
+				"id": {"type": "string", "format": "uri"},
+				"type": {"type": "string", "enum": ["Agent", "Software", "Person", "Organization"]},
+				"name": {"$ref": "#/definitions/stringOrArrayOfStrings"},
+				"label": {"$ref": "#/definitions/languageMap"},
+				"logo": {"$ref": "#/definitions/externalResource"},
+				"seeAlso": {"$ref": "#/definitions/externalResource"},
+				"nickname": {"type": "string"},
+				"email": {"$ref": "#/definitions/stringOrArrayOfStrings"},
+				"email_sha1": {"$ref": "#/definitions/stringOrArrayOfStrings"},
+				"homepage": {
+					"anyOf": [
+						{"type": "string"},
+						{"type": "array", "items": {"$ref": "#/definitions/externalResource"}}
+					]
+				}
+			}
+		},
+		"textualBody": {
+			"type": "object",
+			"properties": {
+				"type": {"type": "string", "enum": ["TextualBody"]},
+				"value": {"type": "string"},
+				"format": {"type": "string"},
+				"language": {"type": "string"},
+				"purpose": {"$ref": "#/definitions/stringOrArrayOfStrings"}
+			},
+			"required": ["type", "value"]
+		},
+		"choice": {
+			"type": "object",
+			"properties": {
+				"id": {"type": "string", "format": "uri"},
+				"type": {"type": "string", "enum": ["Choice"]},
+				"items": {"type": "array"}
+			}
+		},
 
+		"resource": {
+			"type": "object"			
+		}
+	}
 }
